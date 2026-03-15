@@ -1,0 +1,14 @@
+CXX_STD = CXX17
+
+# OpenMP parallel support
+PKG_CXXFLAGS += $(SHLIB_OPENMP_CXXFLAGS)
+PKG_LIBS += $(SHLIB_OPENMP_CXXFLAGS)
+
+# Optimization + Disable Armadillo warnings
+PKG_CXXFLAGS += -DARMA_DONT_PRINT_FAST_MATH_WARNING -O3 -march=native
+
+# Dynamically link rTRNG library (environment-agnostic)
+PKG_LIBS += -LD:/R_4.5.2/R-4.5.2/library/rTRNG/libs/x64 -lrTRNG
+
+# Linear algebra library dependencies
+PKG_LIBS += $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
