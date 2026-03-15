@@ -1,9 +1,9 @@
 # Test 1: plot_group_network functionality
 test_that("plot_group_network works with built-in top50 results", {
   data(top50_Data_result_with_protein, package = "scNPM")
-  gene_names <- gene_names
-  treat_edge_mat <- edge_treat_est[, , 1]
-  ctrl_edge_mat <-edge_ctrl_est[, , 1]
+  gene_names <- result_list$gene_names
+  treat_edge_mat <- result_list$edge_treat_est[, , 1]
+  ctrl_edge_mat <- result_list$edge_ctrl_est[, , 1]
 
   p_treat <- plot_group_network(
     edge_mat = treat_edge_mat,
@@ -25,7 +25,7 @@ test_that("plot_diff_network works with built-in top50 differential data", {
   data(top50_Data_result_with_protein, package = "scNPM")
 
   gene_names <- gene_names
-  diff_mat <- edge_diff_networks$treat_1_ctrl_2$diff_matrix
+  diff_mat <- result_list$edge_diff_networks$treat_1_ctrl_2$diff_matrix
 
   p_combined <- plot_diff_network(
     diff_mat = diff_mat,
