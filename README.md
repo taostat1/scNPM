@@ -34,7 +34,7 @@ library(scNPM)
 ---
 
 ## 🚀 Quick Start
-A minimal example to run the core analysis pipeline:
+A complete example to run the core analysis pipeline:
 ```r
 data("top50_goal_gene_mt", package = "scNPM")
 goal_gene_mt <- as.matrix(goal_gene_mt)
