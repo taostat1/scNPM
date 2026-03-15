@@ -35,6 +35,8 @@ library(scNPM)
 
 ## 🚀 Quick Start
 A complete example to run the core analysis pipeline:
+
+### 1. Load built-in example data
 ```r
 data("top50_goal_gene_mt", package = "scNPM")
 goal_gene_mt <- as.matrix(goal_gene_mt)
@@ -68,9 +70,9 @@ string_interactions_short <- read.table(
   sep = "\t", header = TRUE, stringsAsFactors = FALSE,
   check.names = FALSE
 )
-# --------------------------
-# Run core scNPM analysis
-# --------------------------
+```
+### 2. Run core scNPM analysis
+```r
 result_list <- run_scNPM(
   goal_gene_mt = goal_gene_mt,
   cell_t = cell_t,
@@ -83,13 +85,14 @@ result_list <- run_scNPM(
   edge_prob_adj = 0.75            # Edge probability adjustment factor
 )
 cat("scNPM analysis completed! Runtime:", round(result_list$runtime, 2), "minutes\n")
+```
+### 3. Save and Visualize key results
+```r
 save_path <- "out/top50_Data_result_with_protein.RData"
 # Reduce Memory
 result_list <- result_list[names(result_list) != "Result"]
 save(result_list, file = save_path)
-# --------------------------
-# Visualize key results
-# --------------------------
+
 # Create output directory
 if (!dir.exists("out")) {
   dir.create("out", recursive = TRUE)
@@ -166,7 +169,6 @@ for (cluster_id in 1:K) {
 | Function               | Description                                                                 |
 |------------------------|-----------------------------------------------------------------------------|
 | `run_scNPM()`          | Main function to execute the full scNPM pipeline                           |
-| `update_pi_R()`        | Update cluster proportion parameters via Dirichlet sampling (C++ backend)   |
 | `plot_group_network()` | Visualize gene regulatory networks for a specific group                     |
 | `plot_diff_network()`  | Plot differential networks between treatment and control groups            |
 
