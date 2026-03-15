@@ -2,11 +2,11 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 MCMC_with_difficulty_based_matching <- function(num_iter, num_save, theta_t, ind_zero, mu_treat, mu_ctrl, invcov_treat, cov_treat, invcov_ctrl, cov_ctrl, edge_treat, edge_ctrl, group_treat, group_ctrl, lambda0_t, lambda1_t, pi_treat, pi_ctrl, gam, cell_t, G, N_int, K, ssp_v0, ssp_v1, ssp_l, ssp_xi, epsilon_theta = 0.2, num_step_theta = 20L, eta_mu = 0.0, tau_sq_mu = 1.0, lam0_0 = 2.0, lam1_0 = -2.0, sigma2_lam0 = 0.25, sigma2_lam1 = 0.25, edge_prob_threshold = 0.6, edge_prob_adj = 0.75, epsilon_lam = 0.01, num_step_lam = 10L) {
-    .Call('_scNPM_MCMC_with_difficulty_based_matching', PACKAGE = 'scNPM', num_iter, num_save, theta_t, ind_zero, mu_treat, mu_ctrl, invcov_treat, cov_treat, invcov_ctrl, cov_ctrl, edge_treat, edge_ctrl, group_treat, group_ctrl, lambda0_t, lambda1_t, pi_treat, pi_ctrl, gam, cell_t, G, N_int, K, ssp_v0, ssp_v1, ssp_l, ssp_xi, epsilon_theta, num_step_theta, eta_mu, tau_sq_mu, lam0_0, lam1_0, sigma2_lam0, sigma2_lam1, edge_prob_threshold, edge_prob_adj, epsilon_lam, num_step_lam)
+    .Call(`_scNPM_MCMC_with_difficulty_based_matching`, num_iter, num_save, theta_t, ind_zero, mu_treat, mu_ctrl, invcov_treat, cov_treat, invcov_ctrl, cov_ctrl, edge_treat, edge_ctrl, group_treat, group_ctrl, lambda0_t, lambda1_t, pi_treat, pi_ctrl, gam, cell_t, G, N_int, K, ssp_v0, ssp_v1, ssp_l, ssp_xi, epsilon_theta, num_step_theta, eta_mu, tau_sq_mu, lam0_0, lam1_0, sigma2_lam0, sigma2_lam1, edge_prob_threshold, edge_prob_adj, epsilon_lam, num_step_lam)
 }
 
 update_mu_R <- function(theta_t, invcov_t, group_t, G, K, eta_mu = 0, tau_sq_mu = 1) {
-    .Call('_scNPM_update_mu_R', PACKAGE = 'scNPM', theta_t, invcov_t, group_t, G, K, eta_mu, tau_sq_mu)
+    .Call(`_scNPM_update_mu_R`, theta_t, invcov_t, group_t, G, K, eta_mu, tau_sq_mu)
 }
 
 #' Update pi parameter in scNPM model
@@ -17,6 +17,6 @@ update_mu_R <- function(theta_t, invcov_t, group_t, G, K, eta_mu = 0, tau_sq_mu 
 #' @return Dirichlet sampling result for pi
 #' @export 
 update_pi_R <- function(group_t, gam, K) {
-    .Call('_scNPM_update_pi_R', PACKAGE = 'scNPM', group_t, gam, K)
+    .Call(`_scNPM_update_pi_R`, group_t, gam, K)
 }
 
