@@ -7,7 +7,7 @@ An R package for single-cell gene regulatory network analysis and treatment-cont
 `scNPM` implements a **network-based propensity matching framework** for single-cell RNA-seq data, designed to:
 - Construct and compare gene regulatory networks between treatment and control groups
 - Perform cluster-level propensity matching to balance confounding factors
-- Enable robust differential network analysis with statistical rigor
+- Enable robust differential network analysis with effectively dealing with zero inflation and cellular heterogeneity.
 - Support efficient computation via C++ backend (RcppArmadillo + OpenMP)
 
 ---
