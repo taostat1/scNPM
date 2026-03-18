@@ -1,4 +1,4 @@
-# scNPM: Single-Cell Network Propensity Matching
+# scNPM: An R package for Single-Cell Network Propensity Matching
 An R package for single-cell gene regulatory network analysis and treatment-control comparison using network propensity matching.
 
 ---
