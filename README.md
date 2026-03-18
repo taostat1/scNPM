@@ -32,6 +32,66 @@ library(scNPM)
 ```
 
 ---
+## 📝 Data Access
+- **Example data (built-in)**: Included in the package for quick testing, choose one for running
+  ```r
+  data("top50_goal_gene_mt", package = "scNPM")  # Example dataset 50 genes
+  # data("top100_goal_gene_mt", package = "scNPM")  # Example dataset 100 genes
+  # data("top150_goal_gene_mt", package = "scNPM")  # Example dataset 150 genes
+  # data("goal_gene_mt", package = "scNPM")  # Example dataset 69 genes
+  ```
+##  📌 Input Data Documentation (Code `data("top50_goal_gene_mt", package = "scNPM")` Output)
+| Element | Description |
+| ---- | ---- |
+| cell | Cell metadata dataframe containing sample information (e.g., treatment status, QC metrics) |
+| goal_gene_mt | Gene expression matrix for target genes (cells × genes) used as model input |
+| mt | Full gene expression matrix (cells × all genes) from which goal_gene_mt is subset |
+| goal_gene | Character vector of target gene names (matches columns of goal_gene_mt) |
+---
+
+## 📚 Core Functions
+| Function               | Description                                                                 |
+|------------------------|-----------------------------------------------------------------------------|
+| `run_scNPM()`          | Main function to execute the full scNPM pipeline                           |
+| `plot_group_network()` | Visualize gene regulatory networks for a specific group                     |
+| `plot_diff_network()`  | Plot differential networks between treatment and control groups            |
+
+---
+
+## 📚 Documentation for `result_list` (Function run_scNPM() Output)
+| Element | Description |
+|--------|-------------|
+| `result_list$runtime` | Total runtime of the scNPM model |
+| `result_list$K` | Number of clusters (subpopulations) |
+| `result_list$G` | Number of genes in the network |
+| `result_list$N` | Total number of cells in the dataset |
+| `result_list$lam0_est` | Posterior mean of baseline intensity parameter λ₀ for each gene |
+| `result_list$lam1_est` | Posterior mean of signal strength parameter λ₁ for each gene |
+| `result_list$gene_names` | Gene names corresponding to rows/columns of network matrices |
+| `result_list$mu_treat_est` | Estimated mean expression for each gene in the treatment group |
+| `result_list$mu_ctrl_est` | Estimated mean expression for each gene in the control group |
+| `result_list$invcov_treat_est` | Estimated precision (inverse covariance) matrix for treatment |
+| `result_list$invcov_ctrl_est` | Estimated precision (inverse covariance) matrix for control |
+| `result_list$edge_treat_est` | 3D array (G×G×K) of edge probabilities in treatment networks |
+| `result_list$edge_ctrl_est` | 3D array (G×G×K) of edge probabilities in control networks |
+| `result_list$group_treat_est` | Cluster labels for each cell in the treatment group |
+| `result_list$group_ctrl_est` | Cluster labels for each cell in the control group |
+| `result_list$group_est` | Combined cluster assignments for all cells |
+| `result_list$pi_treat_est` | Estimated cluster proportions in the treatment group |
+| `result_list$pi_ctrl_est` | Estimated cluster proportions in the control group |
+| `result_list$theta_treat_est` | Cluster-specific parameters for the treatment group |
+| `result_list$theta_ctrl_est` | Cluster-specific parameters for the control group |
+| `result_list$theta_est` | Combined model parameters across both groups |
+| `result_list$matching_result_df` | Data frame of cluster matching results between treatment and control |
+| `result_list$smd_results` | Standardized mean difference (SMD) for matched clusters |
+| `result_list$match_map` | Mapping from each treatment cluster to its matched control cluster |
+| `result_list$edge_diff_networks` | List of differential networks for each matched cluster pair |
+| `result_list$edge_diff_networks$...$diff_matrix` | Edge difference matrix (treatment − control) |
+| `result_list$edge_diff_networks$...$solid_network$mat` | Binary matrix for specific edges (stronger in treatment) |
+| `result_list$edge_diff_networks$...$dashed_network$mat` | Binary matrix for reversed edges (stronger in control) |
+| `result_list$Result` | Raw full MCMC output with all iterations |
+
+---
 
 ## 🚀 Quick Start
 A complete example to run the core analysis pipeline:
@@ -163,68 +223,6 @@ for (cluster_id in 1:K) {
 }
 ```
 
----
-
-## 📚 Core Functions
-| Function               | Description                                                                 |
-|------------------------|-----------------------------------------------------------------------------|
-| `run_scNPM()`          | Main function to execute the full scNPM pipeline                           |
-| `plot_group_network()` | Visualize gene regulatory networks for a specific group                     |
-| `plot_diff_network()`  | Plot differential networks between treatment and control groups            |
-
----
-
-# 📚 Documentation for `result_list` (scNPM Output)
-## Full Element Description
-| Element | Description |
-|--------|-------------|
-| `result_list$runtime` | Total runtime of the scNPM model |
-| `result_list$K` | Number of clusters (subpopulations) |
-| `result_list$G` | Number of genes in the network |
-| `result_list$N` | Total number of cells in the dataset |
-| `result_list$lam0_est` | Posterior mean of baseline intensity parameter λ₀ for each gene |
-| `result_list$lam1_est` | Posterior mean of signal strength parameter λ₁ for each gene |
-| `result_list$gene_names` | Gene names corresponding to rows/columns of network matrices |
-| `result_list$mu_treat_est` | Estimated mean expression for each gene in the treatment group |
-| `result_list$mu_ctrl_est` | Estimated mean expression for each gene in the control group |
-| `result_list$invcov_treat_est` | Estimated precision (inverse covariance) matrix for treatment |
-| `result_list$invcov_ctrl_est` | Estimated precision (inverse covariance) matrix for control |
-| `result_list$edge_treat_est` | 3D array (G×G×K) of edge probabilities in treatment networks |
-| `result_list$edge_ctrl_est` | 3D array (G×G×K) of edge probabilities in control networks |
-| `result_list$group_treat_est` | Cluster labels for each cell in the treatment group |
-| `result_list$group_ctrl_est` | Cluster labels for each cell in the control group |
-| `result_list$group_est` | Combined cluster assignments for all cells |
-| `result_list$pi_treat_est` | Estimated cluster proportions in the treatment group |
-| `result_list$pi_ctrl_est` | Estimated cluster proportions in the control group |
-| `result_list$theta_treat_est` | Cluster-specific parameters for the treatment group |
-| `result_list$theta_ctrl_est` | Cluster-specific parameters for the control group |
-| `result_list$theta_est` | Combined model parameters across both groups |
-| `result_list$matching_result_df` | Data frame of cluster matching results between treatment and control |
-| `result_list$smd_results` | Standardized mean difference (SMD) for matched clusters |
-| `result_list$match_map` | Mapping from each treatment cluster to its matched control cluster |
-| `result_list$edge_diff_networks` | List of differential networks for each matched cluster pair |
-| `result_list$edge_diff_networks$...$diff_matrix` | Edge difference matrix (treatment − control) |
-| `result_list$edge_diff_networks$...$solid_network$mat` | Binary matrix for specific edges (stronger in treatment) |
-| `result_list$edge_diff_networks$...$dashed_network$mat` | Binary matrix for reversed edges (stronger in control) |
-| `result_list$Result` | Raw full MCMC output with all iterations |
-
----
-
-## 📝 Data Access
-- **Example data (built-in)**: Included in the package for quick testing
-  ```r
-  data("top50_goal_gene_mt", package = "scNPM")  # Example dataset 50 genes
-  data("top100_goal_gene_mt", package = "scNPM")  # Example dataset 100 genes
-  data("top150_goal_gene_mt", package = "scNPM")  # Example dataset 150 genes
-  data("goal_gene_mt", package = "scNPM")  # Example dataset 69 genes
-  ```
-- **Input Data Documentation**
-| Element | Description |
-|---------|-------------|
-| `cell` | Cell metadata dataframe containing sample information (e.g., treatment status) |
-| `goal_gene_mt` | Gene expression matrix for target genes (cells × genes) used as model input |
-| `mt` | Full gene expression matrix (cells × all genes) from which `goal_gene_mt` is subset |
-| `goal_gene` | Character vector of target gene names (matches columns of `goal_gene_mt`) |
 ---
 
 ## 🛠️ System Requirements
