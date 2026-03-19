@@ -58,7 +58,7 @@ library(scNPM)
 
 ---
 
-## 📚 Documentation for `result_list` (Function run_scNPM() Output)
+## 🎯 Documentation for `result_list` (Function run_scNPM() Output)
 | Element | Description |
 |--------|-------------|
 | `result_list$runtime` | Total runtime of the scNPM model |
